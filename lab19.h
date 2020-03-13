@@ -62,6 +62,35 @@ void Unit::showStatus(){
 void Unit::newTurn(){
 	guard_on = false;
 }
+int Unit::attack(Unit &target){
+	int dmg=atk - target.def;
+	if(target.def>atk) dmg=0;
+	return target.beAttacked(dmg);
+}
+
+int Unit::beAttacked(int dmg){
+	if(guard_on==true)dmg=dmg/3;
+	hp-=dmg;
+	return dmg;
+}
+
+int Unit::heal(){
+	 int hpup = rand()%21+10;
+	 if(hp==hpmax)hpup =0;
+	 else if(hp+hpup>hpmax)hpup=hpmax-hp;
+	 hp+=hpup;
+	 return hpup;
+}
+
+void Unit::guard(){
+	guard_on=true;
+}
+
+
+bool Unit::isDead(){
+	if(hp <= 0) return true;
+	else return  false;
+}
 
 //Write Function Member attack(), beAttacked(), heal(), guard() and isDead() here
 //
